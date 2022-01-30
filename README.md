@@ -145,8 +145,52 @@ Prediction comparison of non-quantized and quantized model
 
 IoU comparison of non-quantized and quantized model    
      
-   
+## 8. Compile the model:
+The command compile the model. It needs to be run from the project directory in docker.
+  ```
+  $ vai_c_tensorflow2 -m /workspace/test-model/road_scene/quantized_model/quantized_model.h5 -a /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json -o /workspace/test-model/road_scene/compiled_model -n compiled_unet -e "{'mode':'normal'}"
+  ```
+Breakdown of the command
 
-     
-     
+ - ``` -m ``` the location of the quantized model
+ - ``` -a ``` arch option supplies the specific configuration of the DPU Architecture.
+ - ``` -o ``` output directory
+ - ``` -n ``` net name
+ - ``` -o ``` options
 
+## 9. Deploy and Run on FPGA:
+Create a deployment folder(in my case road_scene_target_zcu104) that we will put on the FPGA. 
+The folder will contain the following files and folder.
+- ```test.tar.gz``` will contain test images and segmentation image
+    ```
+    # copy test images into target board
+    $ tar -cvf "test.tar" ${DATASET_DIR}/img_test ${DATASET_DIR}/seg_test
+    $ gzip test.tar
+    $ cp test.tar.gz ${TARGET_104}
+    ```
+- ```unet``` contain .xmodel and .json file
+-  ```rpt``` contain the log file
+-  ```png_unet``` it will store the predicted image
+-  ```code``` contains all the code. It will contain the following folders and files 
+    * ```build_app.sh```
+    * ```build_get_dpu_fps.sh```
+    * ```run_cnn_fps.sh```
+    * ```src``` contains ```get_dpu_fps.cc``` and ```main_mt_int8.cc```
+    * ```common``` contains ```common.cpp``` and ```common.h```
+
+Copy the folder(road_scene_target_zcu104) to the FPGA using following command. 
+
+  ```
+  $ scp <project-directory-path>/road_scene_target_zcu104 root@10.42.0.100:~/
+  ```
+  
+From the FPGA terminal connected with minicom from FPGA enter into the road_scene_target_zcu104 and run the ```run_all_target.sh``` with the following command. 
+  ```
+  $ ./run_all_target.sh
+  ```
+  ![alt text](https://github.com/Zaman32/vitis_fpga_semantic_seg/blob/main/vitis_doc_png/out_000.png?raw=true)
+  
+  Inference by FPGA on a test image
+  
+
+ 
