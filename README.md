@@ -1,8 +1,10 @@
 # Semantic segmentation with UNET(Tensorflow 2) and Deploy on FPGA with Vitis AI
 
+
 ## 1. Introduction
 
 UNET is one of the most popular, simple and effective neurtal network model for Semantic segmentation. In this project UNET model with Tensorflow 2 has been developed for road scene segmentation. Then the model was deployed to FPGA. Vitis AI 1.4 has been used to accelerate DPU on ZCU 104 FPGA. Follwoing the process will be presented step by step in details.
+** Credit: Much of the contents were modified from [1] which is for tensorflow 1, Vitis AI 1.3 and ZCU102. This documentation contains the process with tensorflow 2, Vitis AI 1.4 and ZCU104 including details procedure to setting up the board and host target configuration.
 
 ## 2. OS, Tools and hardware used
 
@@ -192,5 +194,7 @@ From the FPGA terminal connected with minicom from FPGA enter into the road_scen
   
   Inference by FPGA on a test image
   
+# References 
+1. FCN8 and UNET Semantic Segmentation with Keras and Xilinx Vitis AI :point_right: ![link](https://github.com/Xilinx/Vitis-AI-Tutorials/blob/master/Design_Tutorials/05-Keras_FCN8_UNET_segmentation/README.md)
 
  
