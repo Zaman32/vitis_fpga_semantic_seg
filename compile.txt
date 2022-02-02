@@ -1,0 +1,4 @@
+# Final tf2
+vai_c_tensorflow2 -m /workspace/test-model/road_scene/quantized_model/quantized_model.h5 -a /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU104/arch.json -o /workspace/test-model/road_scene/compiled_model -n compiled_unet -e "{'mode':'normal'}"
+
+
